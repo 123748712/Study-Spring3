@@ -8,6 +8,6 @@
 <body>
 <h1>멤버 접속가능한 페이지</h1>
 <h1>${accessUser} 접속</h1>
-<a href="<%= request.getContextPath() %>/logout">logout</a>
+<a href="<%= request.getContextPath() %>/mylogout">logout</a>
 </body>
 </html>
