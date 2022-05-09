@@ -3,6 +3,7 @@ package kr.or.soo.controller;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginOutController {
 
 	@GetMapping("/mylogin")
-	public String getLogin() {
+	public String getLogin(HttpSession session) {
+		session.setAttribute("guest", "guest");
 		log.info("This is my Login-Page");
 		return "mylogin";
 	}
