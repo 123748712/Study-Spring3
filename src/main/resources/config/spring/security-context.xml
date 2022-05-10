@@ -9,7 +9,8 @@
 	<!-- Sequence상 @Component로 만들지 않는다. -->
 	<beans:bean id="customAccessDeniedHandler" class="kr.or.soo.security.CustomAccessDeniedHandler" />
 	<beans:bean id="customAuthenticationSuccessHandler" class="kr.or.soo.security.CustomAuthenticationSuccessHandler" />
-	<beans:bean id="customPasswordEncoder" class="kr.or.soo.security.CustomPasswordEncoder"></beans:bean>
+<!-- 	<beans:bean id="customPasswordEncoder" class="kr.or.soo.security.CustomPasswordEncoder"></beans:bean> -->
+	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	<!-- web 보안 --> <!-- auto-config 키워드 등록 태그 -->
 	<http use-expressions="true"> <!-- 인증 설정 태그 -->
@@ -43,6 +44,8 @@
 <!-- 				<user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_SOO, ROLE_MEMBER"/> -->
 <!-- 				<user name="soo" password="{noop}soo" authorities="ROLE_SOO"/> -->
 <!-- 			</user-service> -->
+
+				<!-- 사용자상세정보(userdetails) -->
 			<jdbc-user-service data-source-ref="dataSource"
 			users-by-username-query="select userid,userpw,enabled from mymem where userid = ?"
 			authorities-by-username-query="select userid,userauth from myauth where userid = ?"/>
@@ -51,7 +54,8 @@
 			 select username,authority from authorities where username = ?
 			  이 디폴트. 다른 테이블, 다른 이름으로 하고 싶다면 이 구문 수정
 			  -->
-			<password-encoder ref="customPasswordEncoder"/> <!-- password를 암호화해야하기 때문에 직접 암호화한 클래스 연결 -->
+			<password-encoder ref="bcryptPasswordEncoder"/> <!-- password를 암호화해야하기 때문에 직접 암호화한 클래스 연결 -->
+		
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>	
