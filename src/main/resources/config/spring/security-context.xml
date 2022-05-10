@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd">
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!-- id를 주기 위한 class bean 등록 -->
+	<beans:bean id="customAccessDeniedHandler" class="kr.or.soo.security.CustomAccessDeniedHandler" />
+	<beans:bean id="customAuthenticationSuccessHandler" class="kr.or.soo.security.CustomAuthenticationSuccessHandler" />
+	
 	<!-- web 보안 --> <!-- auto-config 키워드 등록 태그 -->
-	<security:http use-expressions="true"> <!-- 인증 설정 태그 -->
+	<http use-expressions="true"> <!-- 인증 설정 태그 -->
 		<!-- 인증이 필요한 페이지를 등록하고 해당하는 권한을 설정 -->
 		<!-- pattern : 권한과 인증이 필요한 페이지 등록 -->
 		<!-- access : 권한을 가진 롤 옵션 등록(표현식에 따라 권한 다름), access 순서에 따라 에러발생(중요 !) -->
-		<security:intercept-url pattern="/fbi/all" access="permitAll" />
-		<security:intercept-url pattern="/fbi/member" access="hasRole('ROLE_MEMBER')" /> <!-- 해당 권한을 가졌는지 검사 -->
-		<security:intercept-url pattern="/fbi/admin" access="hasRole('ROLE_ADMIN')" /> <!-- 해당 권한을 가졌는지 검사 -->
-		<security:intercept-url pattern="/fbi/soo" access="hasRole('ROLE_SOO')" /> <!-- 해당 권한을 가졌는지 검사 -->
+		<intercept-url pattern="/fbi/all" access="permitAll" />
+		<intercept-url pattern="/fbi/member" access="hasRole('ROLE_MEMBER')" /> <!-- 해당 권한을 가졌는지 검사 -->
+		<intercept-url pattern="/fbi/admin" access="hasRole('ROLE_ADMIN')" /> <!-- 해당 권한을 가졌는지 검사 -->
+		<intercept-url pattern="/fbi/soo" access="hasRole('ROLE_SOO')" /> <!-- 해당 권한을 가졌는지 검사 -->
 		
 		<!-- 위에 설정한 url 제외 권한 열기 -->
 		<!-- 디렉토리가 들어가면 **(aaa/bbb/ccc), 그 외엔 *(/aaa, /bbb) -->
-		<security:intercept-url pattern="/**" access="permitAll" /> <!-- 모두 허용 -->
+		<intercept-url pattern="/**" access="permitAll" /> <!-- 모두 허용 -->
 		<!-- auto-config 키워드 등록시 login, logout 태그 열지 않아도 됨 그러나 잘 사용하지 않음-->
-		<security:form-login login-page="/mylogin" /> <!-- controller에서 get으로 화면출력의 용도처럼 url 등록 -->
-		<security:access-denied-handler error-page="/accessError" />
-		<security:logout invalidate-session="true" logout-url="/mylogout"/> <!-- 로그아웃시 자동으로 로그인화면 전환 -->
+		<form-login login-page="/mylogin" authentication-success-handler-ref="customAuthenticationSuccessHandler" /> <!-- controller에서 get으로 화면출력의 용도처럼 url 등록, ...ref : 인증 성공시 실행할 class -->
+<!-- 		<access-denied-handler error-page="/accessError" /> -->
+		<access-denied-handler ref="customAccessDeniedHandler" /> <!-- 403 에러 발생시 실행 -->
+		<logout invalidate-session="true" logout-url="/mylogout"/> <!-- 로그아웃시 자동으로 로그인화면 전환 -->
 						<!-- 세션 무효화 키워드 -->
 						
 		<!-- CSRF(Cross Site Request Forgery) : 정상적인 요청이 아닌 위조 요청 -->
-		<security:csrf disabled="false" /> <!-- csrf 기능 막기 -->
-	</security:http>
+		<csrf disabled="false" /> <!-- csrf 기능 막기 -->
+	</http>
 	
 	<!-- 인증 관리자 설정 -->
-	<security:authentication-manager>
-		<security:authentication-provider>
+	<authentication-manager>
+		<authentication-provider>
 			<!-- inMemory USER 설정으로 간단하게 USER 등록 -->
-			<security:user-service> <!-- 접근 USER 등록 권한 여러개 줄수 있음 -->
-				<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_SOO, ROLE_MEMBER"/>
-				<security:user name="soo" password="{noop}soo" authorities="ROLE_SOO"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
-</beans>	
+			<user-service> <!-- 접근 USER 등록 권한 여러개 줄수 있음 -->
+				<user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_SOO, ROLE_MEMBER"/>
+				<user name="soo" password="{noop}soo" authorities="ROLE_SOO"/>
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>	
