@@ -36,6 +36,13 @@
 						
 		<!-- CSRF(Cross Site Request Forgery) : 정상적인 요청이 아닌 위조 요청 -->
 		<csrf disabled="false" /> <!-- csrf 기능 막기 -->
+
+		<session-management>
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+			<!-- 로그인시 한개의 session을 갖고 있다. true를 설정하게 되면 session max가 넘어가게 되면 error 발생 -->
+		</session-management>
+		<remember-me data-source-ref="dataSource" token-validity-seconds="259000"/>
+		<!-- remember-me를 이용할 테이블 생성 후 dataSource로 db와 연결. token이 유지될 시간 설정 -->
 	</http>
 	
 	<!-- 인증 관리자 설정 -->

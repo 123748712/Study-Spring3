@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<beans:bean id="customAccessDeniedHandler" class="kr.or.soo.security.CustomAccessDeniedHandler" />
+	<beans:bean id="customAuthenticationSuccessHandler" class="kr.or.soo.security.CustomAuthenticationSuccessHandler" />
+	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<beans:bean id="customUserDetailsService" class="kr.or.soo.security.CustomUserDetailsService" />
+	
+	<http use-expressions="true">
+		<!-- URL 가로채기, 권한이 있으면 통과. 보안URL만 잘 설계하면 OK-->
+		<intercept-url pattern="/fbi/member" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/fbi/admin" access="hasRole('ROLE_ADMIN')" /> 
+		<intercept-url pattern="/fbi/all" access="permitAll" />
+		<intercept-url pattern="/**" access="permitAll"/>
+		
+		<intercept-url pattern="/**" access="permitAll" />
+		<form-login login-page="/mylogin" authentication-success-handler-ref="customAuthenticationSuccessHandler" />
+		<access-denied-handler ref="customAccessDeniedHandler" />
+		<logout invalidate-session="true" logout-url="/mylogout"/>
+		<csrf disabled="false" />
+	</http>
+	
+	<!-- 인증관리자 설정 -->	
+	<authentication-manager erase-credentials="false">
+		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder ref="bcryptPasswordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>	

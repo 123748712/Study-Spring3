@@ -13,6 +13,7 @@
 	아이디<input type="text" name="username" value=""> <br>
 	비밀번호<input type="password" name="password" value=""> <br>
  	<!-- security parameter는 uesrname, password로 받는다. -->
+	remember-me<input type="checkbox" name="remember-me" value="on"> 	
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<!-- form의 method가 post인 경우에만 넣어줌 csrf 공격을 막기위함 -->
 	<button>login</button>
