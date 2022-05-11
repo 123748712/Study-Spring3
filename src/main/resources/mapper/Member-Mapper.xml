@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.soo.mapper.MemberMapper">
-	<resultMap type="kr.or.soo.domain.MemberVO" id="memberMap">
+	<resultMap type="memberVO" id="memberMap"> <!-- type : mybatisConfig.xml 에서 설정한 alias로 작성 가능 -->
 		<id property="userid" column="userid"/> <!-- Primary Key -->
 		<!-- property : VO속성, column : 테이블 컬럼명 -->
 		<result property="userid" column="userid"/>
@@ -12,7 +12,7 @@
 		<!-- List기 때문에 result가 아닌 collection 태그 사용 -->
 	</resultMap>
 
-	<resultMap type="kr.or.soo.domain.AuthVO" id="authMap">
+	<resultMap type="authVO" id="authMap">
 		<result property="userid" column="userid"/>
 		<result property="auth" column="authority"/>
 	</resultMap>

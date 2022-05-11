@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+<!-- 
+	mybatis editor download
+	xml 생성, dtd -> catalog -> mybatis.config 선택 후 생성
+-->
+	<typeAliases>
+		<typeAlias type="kr.or.soo.domain.MemberVO" alias="memberVO"/>
+		<typeAlias type="kr.or.soo.domain.AuthVO" alias="authVO"/>
+	</typeAliases>
+</configuration>

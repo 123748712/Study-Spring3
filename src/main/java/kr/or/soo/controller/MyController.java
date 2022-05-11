@@ -33,6 +33,13 @@ public class MyController {
 		return "adminaccess";
 	}
 	
+	@GetMapping("/admin2")
+	public String getAdmin2(Model model) {
+		log.info("Admin Access");
+		model.addAttribute("accessUser", "Admin");
+		return "userDetailsCK";
+	}
+	
 	@GetMapping("/soo")
 	public String getSoo(Model model) {
 		log.info("Soo Access");
