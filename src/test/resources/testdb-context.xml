@@ -30,5 +30,5 @@
     	<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<mybatis-spring:scan base-package="kr.or.basic.mapper"/>
+	<mybatis-spring:scan base-package="kr.or.soo.mapper"/>
 </beans>

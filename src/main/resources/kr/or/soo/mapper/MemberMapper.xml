@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.soo.mapper.MemberMapper">
+	<resultMap type="kr.or.soo.domain.MemberVO" id="memberMap">
+		<id property="userid" column="userid"/> <!-- Primary Key -->
+		<!-- property : VO속성, column : 테이블 컬럼명 -->
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="password"/>
+		<result property="userName" column="username"/>
+		<result property="regDate" column="regdate"/>
+		<collection property="authList" resultMap="authMap" />
+		<!-- List기 때문에 result가 아닌 collection 태그 사용 -->
+	</resultMap>
+
+	<resultMap type="kr.or.soo.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="authority"/>
+	</resultMap>
+
+	<select id="read" resultMap="memberMap">
+		select mem.userid, auth.userid, password, username, enabled, regdate, authority
+		from users mem, authorities auth
+		where mem.userid = auth.userid
+		and mem.userid = #{userid}
+	</select>
+	<!-- #{} : 파라미터가 string 형태로 온다. 'aaa' , ${} : 자료형에 맞추어 변경 -->
+</mapper>
