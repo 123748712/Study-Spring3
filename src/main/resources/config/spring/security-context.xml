@@ -28,21 +28,21 @@
 		<!-- 디렉토리가 들어가면 **(aaa/bbb/ccc), 그 외엔 *(/aaa, /bbb) -->
 		<intercept-url pattern="/**" access="permitAll" /> <!-- 모두 허용 -->
 		<!-- auto-config 키워드 등록시 login, logout 태그 열지 않아도 됨 그러나 잘 사용하지 않음-->
-		<form-login login-page="/mylogin" authentication-success-handler-ref="customAuthenticationSuccessHandler" /> <!-- controller에서 get으로 화면출력의 용도처럼 url 등록, ...ref : 인증 성공시 실행할 class -->
+		<form-login login-page="/mylogin" authentication-success-handler-ref="customAuthenticationSuccessHandler"/> <!-- controller에서 get으로 화면출력의 용도처럼 url 등록, ...ref : 인증 성공시 실행할 class -->
 <!-- 		<access-denied-handler error-page="/accessError" /> -->
 		<access-denied-handler ref="customAccessDeniedHandler" /> <!-- 403 에러 발생시 실행 -->
-		<logout invalidate-session="true" logout-url="/mylogout"/> <!-- 로그아웃시 자동으로 로그인화면 전환 -->
-						<!-- 세션 무효화 키워드 -->
+		<logout invalidate-session="true" logout-url="/mylogout" delete-cookies="JSESSIONID, remember-me"/> <!-- 로그아웃시 자동으로 로그인화면 전환 -->
+				<!-- 세션 무효화 키워드 -->                            <!-- 로그아웃시 지우고 싶은 cookie 설정 -->
 						
 		<!-- CSRF(Cross Site Request Forgery) : 정상적인 요청이 아닌 위조 요청 -->
 		<csrf disabled="false" /> <!-- csrf 기능 막기 -->
 
 		<session-management>
-			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="false" />
 			<!-- 로그인시 한개의 session을 갖고 있다. true를 설정하게 되면 session max가 넘어가게 되면 error 발생 -->
 		</session-management>
 		<remember-me data-source-ref="dataSource" token-validity-seconds="259000"/>
-		<!-- remember-me를 이용할 테이블 생성 후 dataSource로 db와 연결. token이 유지될 시간 설정 -->
+		<!-- remember-me를 이용할 테이블 생성 후 dataSource로 db와 연결. token이 유지될 시간 설정(초단위) -->
 	</http>
 	
 	<!-- 인증 관리자 설정 -->
