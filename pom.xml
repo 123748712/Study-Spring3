@@ -89,6 +89,20 @@
 			<version>5.3.19</version>
 		</dependency>
 
+		<!-- 트랜잭션 datasource,jdbc, mybatis 필요 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>5.2.19.RELEASE</version>
+		</dependency>
+		
+		<!-- sql ? 를 값으로 바꾸어 확인 -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
