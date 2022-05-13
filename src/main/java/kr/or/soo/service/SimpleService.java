@@ -2,6 +2,6 @@ package kr.or.soo.service;
 
 public interface SimpleService {
 	
-	// tx1, tx2 테이블에 insert
-	public void ins2tb();
+	public Integer add(String str1, String str2);
+	public Integer minus(String str1, String str2);
 }

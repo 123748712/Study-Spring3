@@ -8,17 +8,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import lombok.extern.slf4j.Slf4j;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class) // Junit5
 @ContextConfiguration("classpath:test-context.xml")
 @Slf4j
-public class SimpleTest {
+public class SimpleTest2 {
 	
 	@Autowired
-	private SimpleService simpleService;
+	SimpleService2 simpleService;
 	
 	@Test
-	public void myTest() {
-		log.info("sum : " + simpleService.add("272", "337"));
-		log.info("cha : " + simpleService.minus("337", "272"));
+	public void simpleTest() {
+		log.info("simple");
+		simpleService.ins2tb();
 	}
 }
