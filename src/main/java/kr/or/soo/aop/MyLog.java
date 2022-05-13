@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyLog { // 현재 클래스를 advice라고 함.
 
 	// ()안의 내용을 pointcut이라고 하고, 기술법을 pointcut 표현식 이라고 함
+	// Around와 같이 쓰는건 큰 의미가 없음
 //	@Before("execution(* kr.or.soo.service.SimpleService*.*(..))") // SimpleService로 시작하는 클래스의 메소드를 전부 칭함
 //	public void testLog() {
 //		log.info("Advice method (Before)");
